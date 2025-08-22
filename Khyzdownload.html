@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>khyz linktree</title>
+  <style>
+    :root{--bg:#070617;--card:#0f1220;--accent:#7ef3c0;--muted:#97a1ac}
+    *{box-sizing:border-box;font-family:Inter,system-ui,Arial}
+    body{margin:0;background:linear-gradient(180deg,#000,#071021);color:#fff;display:flex;align-items:center;justify-content:center;padding:20px;min-height:100vh}
+    .box{width:100%;max-width:420px;background:linear-gradient(180deg,var(--card),#07101a);padding:20px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,0.6);text-align:center}
+    .avatar{width:120px;height:120px;border-radius:999px;overflow:hidden;margin:0 auto;border:4px solid rgba(255,255,255,0.04);background:#111}
+    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+    h1{margin:14px 0 4px 0;color:var(--accent);font-size:20px}
+    p.sub{margin:0;color:var(--muted);font-size:13px}
+    .links{margin-top:18px;display:flex;flex-direction:column;gap:10px}
+    .btn{display:flex;align-items:center;gap:12px;padding:12px;border-radius:10px;background:#0c1530;text-decoration:none;color:#fff;border:1px solid rgba(255,255,255,0.03);transition:transform .12s,box-shadow .12s}
+    .btn:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,0.6)}
+    .badge{width:36px;height:36;border-radius:8px;background:rgba(255,255,255,0.03);display:inline-flex;align-items:center;justify-content:center;font-weight:700}
+    .label{flex:1;text-align:left}
+    .small{font-size:12px;color:var(--muted)}
+    footer{margin-top:14px;font-size:12px;color:var(--muted)}
+    @media(max-width:420px){.box{padding:14px}.avatar{width:96px;height:96px}}
+  </style>
+</head>
+<body>
+  <div class="box">
+   <div class="avatar">
+  <img id="avatarImg" src="https://via.placeholder.com/150" alt="avatar">
+</div>
+    <h1 id="siteTitle">khyz linktree</h1>
+    <p class="sub" id="userName">@khyzproject</p>
+
+    <div class="links" id="linksContainer"></div>
+
+    <footer class="small">link donwload lain nya akan datang, mohon di tunggu</footer>
+  </div>
+
+  <script>
+     /******************************
+     *  SIMPLE CONFIG (EDIT HERE) *
+     ******************************/
+    const CONFIG = {
+      siteTitle: 'khyz linktree',            // judul situs -->
+      userName: 'khyzproject',               // nama/pengguna -->
+      avatar: 'https://files.catbox.moe/zk8cf8.jpg', // ganti link fotomu di sini
+
+       // Tambah atau hapus item sesuai kebutuhan.
+      // type: 'link' untuk tautan biasa, 'download' untuk link download
+      // badge: teks kecil di kiri tombol (opsional)
+      links: [
+        { type: 'link', label: 'WhatsApp', url: 'https://wa.me/6283835730235', badge: 'WA' },
+        { type: 'link', label: 'TikTok', url: 'https://www.tiktok.com/@hudssss9?_t=ZS-8yhmJiuXAfw&_r=1', badge: 'TT' },
+        { type: 'link', label: 'Group Telegram', url: 'https://t.me/+nB-4fvoL0LtkYWM9', badge: 'TELE' },
+
+        // Contoh 5 link download mediafire. Ganti URL sesuai file mediafiremu.
+        { type: 'download', label: 'SC Bot Alucard Md x Shop', url: 'https://www.mediafire.com/file/9f8lh9ln311mkvl/ALUCARD-MD_FIX_UNDEFINED.zip/file', badge: 'DL' },
+        { type: 'download', label: 'SC Bot Furina v4', url: 'https://www.mediafire.com/file/79dv72p99tlefda/FURINA+NEW+UPDATE+V4.zip/file', badge: 'DL' },
+        { type: 'download', label: 'SC Bot Kazuha Md v1', url: 'https://www.mediafire.com/file/crq3vrd7577yehh/ᴋᴀᴢᴜʜᴀ-ᴍᴅ-v1-1.zip/file', badge: 'DL' },
+        { type: 'download', label: 'SC Bot Kyami v2 Cpanel', url: 'https://www.mediafire.com/file/68w609mg9mvhmdz/Kyami_V2.zip/file', badge: 'DL' },
+        { type: 'download', label: 'SC Bot Kotori Md', url: 'https://www.mediafire.com/file/rscb9lyu6towttp/SC_KOTORI-MD.zip/file', badge: 'DL' }
+
+        // Kalau mau nambah lagi, tinggal tambahi baris objek di atas.
+      ]
+    };
+
+    /******************************
+     *    RENDER (tidak perlu ubah)
+     ******************************/
+    const avatarImg = document.getElementById('avatarImg');
+    const siteTitleEl = document.getElementById('siteTitle');
+    const userNameEl = document.getElementById('userName');
+    const linksContainer = document.getElementById('linksContainer');
+
+    function safeText(s){ return String(s==null?'':s); }
+    function render(){
+      avatarImg.src = safeText(CONFIG.avatar);
+      siteTitleEl.textContent = safeText(CONFIG.siteTitle);
+      userNameEl.textContent = '@' + safeText(CONFIG.userName);
+
+      linksContainer.innerHTML = '';
+      CONFIG.links.forEach((it, idx) => {
+        const a = document.createElement('a');
+        a.className = 'btn';
+        a.href = it.url || '#';
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+
+        const badge = document.createElement('div');
+        badge.className = 'badge';
+        badge.textContent = it.badge || (it.type === 'download' ? 'DL' : 'LN');
+
+        const label = document.createElement('div');
+        label.className = 'label';
+        label.textContent = it.label || ('Link ' + (idx+1));
+
+        a.appendChild(badge);
+        a.appendChild(label);
+
+        linksContainer.appendChild(a);
+      });
+    }
+
+    render();
+
+     /******************************
+     * Quick note:
+     * - Untuk ubah foto/nama/link: edit CONFIG di bagian atas (baris COMMENT "EDIT HERE").
+     * - Tambah link: tambahkan object ke CONFIG.links.
+     * - Simpan file, reload browser di HP/PC.
+     ******************************/
+  </script>
+</body>
+</html>
